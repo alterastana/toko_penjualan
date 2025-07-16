@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tambah Piutang Manual</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="brand">
+        <img src="assets/images/logo.png" alt="Logo" class="logo" />
+        <h1>Toko Penjualan</h1>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="tambah_transaksi.html">Transaksi</a>
+        <a href="tambah_hutang.html">Hutang</a>
+        <a href="tambah_saldo.html">Saldo</a>
+        <a href="tambah_piutang.html" class="active">Piutang</a>
+        <a href="tambah_penjualan.html">Penjualan</a>
+        <a href="set_aset.html">Set Aset</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Tambah Piutang Manual</h2>
+    <form id="piutangForm" class="form-group">
+      <label for="nama_piutang">Nama Peminjam:</label>
+      <input type="text" id="nama_piutang" required />
+
+      <label for="jumlah_piutang">Jumlah:</label>
+      <input type="number" id="jumlah_piutang" required />
+
+      <label for="metode_piutang">Metode Pemberian:</label>
+      <select id="metode_piutang" required>
+        <option value="Gopay">Gopay</option>
+        <option value="Dana">Dana</option>
+        <option value="OVO">OVO</option>
+        <option value="BCA">BCA</option>
+        <option value="Spay">ShopeePay</option>
+      </select>
+
+      <label for="keterangan_piutang">Keterangan (opsional):</label>
+      <input type="text" id="keterangan_piutang" />
+
+      <button type="submit">Simpan Piutang</button>
+    </form>
+
+    <div id="piutangStatus" class="success-message"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Toko Penjualan • Dibuat oleh Kamu</p>
+  </footer>
+
+  <script src="assets/js/piutang.js"></script>
+</body>
+</html>

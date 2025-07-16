@@ -1,0 +1,19 @@
+{
+    "name": "astana/toko_penjualan",
+    "description": "Sistem pencatatan transaksi Vermont Store",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Astana\\TokoPenjualan\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Astana Azizi"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

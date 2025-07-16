@@ -1,0 +1,62 @@
+# =======================
+# TIPE-TIPE DATA
+# =======================
+
+type Aset {
+  total_saldo: Float!
+  total_piutang: Float!
+  total_aset: Float!
+}
+
+type Response {
+  success: Boolean!
+  message: String!
+}
+
+# =======================
+# INPUT TIPE
+# =======================
+
+input TransaksiInput {
+  metode: String!
+  jenis: String!       # "masuk" / "keluar"
+  jumlah: Float!
+  keterangan: String
+  keperluan: String
+}
+
+input HutangInput {
+  nama: String!
+  jenis: String!       # "pinjam" / "bayar"
+  jumlah: Float!
+  metode: String!
+  keterangan: String
+}
+
+input PenjualanInput {
+  nama_produk: String!
+  durasi_atau_jumlah: Int!
+  harga_beli: Float!
+  harga_jual: Float!
+  metode_customer: String!
+  metode_modal: String!
+  no_customer: String
+  status: String
+  catatan: String
+}
+
+# =======================
+# QUERY & MUTATION ROOT
+# =======================
+
+type Query {
+  totalAset: Aset!
+}
+
+type Mutation {
+  insertTransaksi(input: TransaksiInput!): Response!
+  insertHutang(input: HutangInput!): Response!
+  insertSaldo(metode: String!, jumlah: Float!, aksi: String!): Response!
+  insertPenjualan(input: PenjualanInput!): Response!
+  setAsetHarian(tanggal: String!, total_aset: Float!): Response!
+}

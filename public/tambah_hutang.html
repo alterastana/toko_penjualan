@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tambah Hutang / Piutang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="brand">
+        <img src="assets/images/logo.png" alt="Logo" class="logo" />
+        <h1>Toko Penjualan</h1>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="tambah_transaksi.html">Transaksi</a>
+        <a href="tambah_hutang.html" class="active">Hutang</a>
+        <a href="tambah_saldo.html">Saldo</a>
+        <a href="tambah_piutang.html">Piutang</a>
+        <a href="tambah_penjualan.html">Penjualan</a>
+        <a href="set_aset.html">Set Aset</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Tambah Piutang / Pengembalian</h2>
+    <form id="hutangForm" class="form-group">
+      <label for="nama">Nama Peminjam:</label>
+      <input type="text" id="nama" placeholder="Contoh: Budi" required />
+
+      <label for="jenis_hutang">Jenis Transaksi:</label>
+      <select id="jenis_hutang" required>
+        <option value="pinjam">Piutangkan ke orang</option>
+        <option value="bayar">Orang mengembalikan</option>
+      </select>
+      <small><em>Pilih "Piutangkan" jika kamu meminjamkan uang. Pilih "Mengembalikan" jika orangnya membayar kembali.</em></small>
+
+      <label for="jumlah_hutang">Jumlah (Rp):</label>
+      <input type="number" id="jumlah_hutang" min="1" required />
+
+      <label for="metode_hutang">Metode Pembayaran:</label>
+      <select id="metode_hutang" required>
+        <option value="Gopay">Gopay</option>
+        <option value="Dana">Dana</option>
+        <option value="OVO">OVO</option>
+        <option value="BCA">BCA</option>
+        <option value="Spay">ShopeePay</option>
+      </select>
+
+      <label for="keterangan_hutang">Keterangan (opsional):</label>
+      <input type="text" id="keterangan_hutang" placeholder="Misal: untuk beli pulsa" />
+
+      <button type="submit">Simpan</button>
+    </form>
+
+    <div id="hutangStatus" class="success-message"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Toko Penjualan • Dibuat oleh Kamu</p>
+  </footer>
+
+  <script src="assets/js/hutang.js"></script>
+</body>
+</html>

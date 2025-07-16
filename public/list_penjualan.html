@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Daftar Penjualan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="brand">
+        <img src="assets/images/logo.png" alt="Logo" class="logo" />
+        <h1>Toko Penjualan</h1>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="tambah_penjualan.html">➕ Tambah Penjualan</a>
+        <a href="list_penjualan.html" class="active">📋 Daftar Penjualan</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Data Penjualan</h2>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Produk</th>
+          <th>Durasi</th>
+          <th>Modal</th>
+          <th>Harga Jual</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tabel-penjualan">
+        <!-- Diisi lewat JS -->
+      </tbody>
+    </table>
+
+    <div id="error" class="error-box" style="display: none;">Gagal mengambil data.</div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Toko Penjualan • Dibuat oleh Kamu</p>
+  </footer>
+
+  <script src="assets/js/penjualan_list.js"></script>
+</body>
+</html>

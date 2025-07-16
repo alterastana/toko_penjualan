@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Daftar Hutang / Piutang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="brand">
+        <img src="assets/images/logo.png" alt="Logo" class="logo" />
+        <h1>Toko Penjualan</h1>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="tambah_hutang.html">➕ Tambah Hutang</a>
+        <a href="list_hutang.html" class="active">📋 Daftar Hutang</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Data Hutang & Piutang</h2>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Nama</th>
+          <th>Jenis</th>
+          <th>Jumlah</th>
+          <th>Metode</th>
+          <th>Keterangan</th>
+        </tr>
+      </thead>
+      <tbody id="tabel-hutang">
+        <!-- Diisi JS -->
+      </tbody>
+    </table>
+
+    <div id="error" class="error-box" style="display: none;">Gagal mengambil data hutang.</div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Toko Penjualan • Dibuat oleh Kamu</p>
+  </footer>
+
+  <script src="assets/js/hutang_list.js"></script>
+</body>
+</html>
