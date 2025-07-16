@@ -19,13 +19,20 @@ class Hutang
             VALUES (CURDATE(), :nama, :jenis, :jumlah, :keterangan, :metode)
         ");
 
-        return $stmt->execute([
+        $result = $stmt->execute([
             ':nama'       => $data['nama'],
-            ':jenis'      => $data['jenis'],       // pinjam / bayar
+            ':jenis'      => $data['jenis'],
             ':jumlah'     => $data['jumlah'],
             ':keterangan' => $data['keterangan'] ?? null,
             ':metode'     => $data['metode']
         ]);
+
+        if (!$result) {
+            $error = $stmt->errorInfo();
+            file_put_contents('log_error.txt', "Gagal INSERT hutang: " . print_r($error, true), FILE_APPEND);
+        }
+
+        return $result;
     }
 
     public function totalPiutang(): float

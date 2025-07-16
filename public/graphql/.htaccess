@@ -1,0 +1,10 @@
+Options +FollowSymLinks
+RewriteEngine On
+DirectoryIndex index.php
+
+<Files "index.php">
+    Order allow,deny
+    Allow from all
+    Require all granted
+</Files>
+

@@ -10,24 +10,48 @@ document.getElementById('transaksiForm').addEventListener('submit', async (e) =>
   };
 
   const query = `
-    mutation InsertTransaksi($input: TransaksiInput!) {
-      insertTransaksi(input: $input) {
+    mutation InsertTransaksi(
+      $metode: String!
+      $jenis: String!
+      $jumlah: Float!
+      $keterangan: String
+      $keperluan: String
+    ) {
+      insertTransaksi(
+        metode: $metode
+        jenis: $jenis
+        jumlah: $jumlah
+        keterangan: $keterangan
+        keperluan: $keperluan
+      ) {
         success
         message
       }
     }
   `;
 
-  const response = await fetch("graphql/index.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query,
-      variables: { input: formData }
-    })
-  });
+  try {
+    const response = await fetch("graphql/index.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query,
+        variables: formData
+      })
+    });
 
-  const result = await response.json();
-  document.getElementById("formStatus").textContent =
-    result.data?.insertTransaksi?.message || "Gagal menyimpan transaksi.";
+    const result = await response.json();
+    const statusEl = document.getElementById("formStatus");
+
+    if (result.errors) {
+      statusEl.textContent = "Error: " + result.errors[0].message;
+      statusEl.style.color = "red";
+    } else {
+      statusEl.textContent = result.data?.insertTransaksi?.message || "Transaksi berhasil.";
+      statusEl.style.color = "green";
+    }
+  } catch (error) {
+    document.getElementById("formStatus").textContent = "Gagal mengirim data.";
+    console.error("Gagal:", error);
+  }
 });

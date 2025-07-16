@@ -5,6 +5,37 @@
   <title>Tambah Penjualan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .autocomplete-wrapper {
+      position: relative;
+    }
+
+    #produkDropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      border: 1px solid #ccc;
+      background: #fff;
+      z-index: 1000;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    #produkDropdown.show {
+      display: block;
+    }
+
+    #produkDropdown div {
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    #produkDropdown div:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -28,8 +59,11 @@
   <main class="container">
     <h2>Tambah Data Penjualan</h2>
     <form id="penjualanForm" class="form-group">
-      <label for="nama_produk">Nama Produk:</label>
-      <input type="text" id="nama_produk" required />
+      <div class="autocomplete-wrapper">
+        <label for="nama_produk">Nama Produk:</label>
+        <input type="text" id="nama_produk" autocomplete="off" required />
+        <div id="produkDropdown"></div>
+      </div>
 
       <label for="durasi">Durasi / Jumlah:</label>
       <input type="number" id="durasi" required />
@@ -81,6 +115,6 @@
     <p>&copy; 2025 Toko Penjualan • Dibuat oleh Kamu</p>
   </footer>
 
-  <script src="assets/js/penjualan.js"></script>
+  <script src="assets/js/penjualanv3.js"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@ type Aset {
   total_aset: Float!
 }
 
-type Response {
+type ApiResponse {
   success: Boolean!
   message: String!
 }
@@ -54,9 +54,9 @@ type Query {
 }
 
 type Mutation {
-  insertTransaksi(input: TransaksiInput!): Response!
-  insertHutang(input: HutangInput!): Response!
-  insertSaldo(metode: String!, jumlah: Float!, aksi: String!): Response!
-  insertPenjualan(input: PenjualanInput!): Response!
-  setAsetHarian(tanggal: String!, total_aset: Float!): Response!
+  insertTransaksi(input: TransaksiInput!): ApiResponse!
+  insertHutang(input: HutangInput!): ApiResponse!
+  insertSaldo(metode: String!, jumlah: Float!, aksi: String!): ApiResponse!
+  insertPenjualan(input: PenjualanInput!): ApiResponse!
+  setAsetHarian(tanggal: String!, total_aset: Float!): ApiResponse!
 }

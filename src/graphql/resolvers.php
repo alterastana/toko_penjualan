@@ -8,6 +8,10 @@ use Src\Models\Penjualan;
 
 class Resolvers
 {
+    // Static properties to store type instances
+    private static $responseType;
+    private static $asetType;
+
     public static function queryType(): ObjectType
     {
         return new ObjectType([
@@ -78,25 +82,31 @@ class Resolvers
 
     private static function responseType(): ObjectType
     {
-        return new ObjectType([
-            'name' => 'Response',
-            'fields' => [
-                'success' => Type::nonNull(Type::boolean()),
-                'message' => Type::nonNull(Type::string()),
-            ],
-        ]);
+        if (!self::$responseType) {
+            self::$responseType = new ObjectType([
+                'name' => 'Response',
+                'fields' => [
+                    'success' => Type::nonNull(Type::boolean()),
+                    'message' => Type::nonNull(Type::string()),
+                ],
+            ]);
+        }
+        return self::$responseType;
     }
 
     private static function asetType(): ObjectType
     {
-        return new ObjectType([
-            'name' => 'Aset',
-            'fields' => [
-                'total_saldo' => Type::nonNull(Type::float()),
-                'total_piutang' => Type::nonNull(Type::float()),
-                'total_aset' => Type::nonNull(Type::float()),
-            ],
-        ]);
+        if (!self::$asetType) {
+            self::$asetType = new ObjectType([
+                'name' => 'Aset',
+                'fields' => [
+                    'total_saldo' => Type::nonNull(Type::float()),
+                    'total_piutang' => Type::nonNull(Type::float()),
+                    'total_aset' => Type::nonNull(Type::float()),
+                ],
+            ]);
+        }
+        return self::$asetType;
     }
 
     /** ========== Implementasi Resolver Logic dengan Model ========== */
@@ -134,12 +144,7 @@ class Resolvers
                 ':kep' => $args['keperluan'] ?? null,
             ]);
 
-            // Update saldo
-            $saldo = new Saldo($db);
-            $args['jenis'] === 'masuk'
-                ? $saldo->tambah($args['metode'], $args['jumlah'])
-                : $saldo->kurangi($args['metode'], $args['jumlah']);
-
+    
             $db->commit();
             return ['success' => true, 'message' => 'Transaksi dompet berhasil.'];
         } catch (\Exception $e) {
@@ -148,16 +153,29 @@ class Resolvers
         }
     }
 
-    private static function insertHutang(array $args, \PDO $db): array
-    {
-        try {
-            $model = new Hutang($db);
-            $model->simpan($args);
-            return ['success' => true, 'message' => 'Hutang/piutang disimpan.'];
-        } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+   private static function insertHutang(array $args, \PDO $db): array
+{
+    try {
+        $db->beginTransaction();
+
+        $model = new Hutang($db);
+        $model->simpan($args);
+
+        $saldo = new Saldo($db);
+        if ($args['jenis'] === 'pinjam') {
+            $saldo->kurangi($args['metode'], $args['jumlah']);
+        } elseif ($args['jenis'] === 'bayar') {
+            $saldo->tambah($args['metode'], $args['jumlah']);
         }
+
+        $db->commit();
+        return ['success' => true, 'message' => 'Hutang/piutang berhasil disimpan.'];
+    } catch (\Exception $e) {
+        $db->rollBack();
+        return ['success' => false, 'message' => $e->getMessage()];
     }
+}
+
 
     private static function insertPenjualan(array $args, \PDO $db): array
     {
