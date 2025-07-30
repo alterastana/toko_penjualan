@@ -35,14 +35,13 @@ class Hutang
         return $result;
     }
 
+    // Perbaikan di sini
     public function totalPiutang(): float
     {
         $stmt = $this->db->query("
-            SELECT IFNULL((
-                SELECT IFNULL(SUM(jumlah), 0) FROM hutang WHERE jenis = 'pinjam'
-            ) - (
-                SELECT IFNULL(SUM(jumlah), 0) FROM hutang WHERE jenis = 'bayar'
-            ), 0) AS piutang
+            SELECT IFNULL(SUM(jumlah), 0)
+            FROM hutang
+            WHERE jumlah > 0
         ");
         return (float) $stmt->fetchColumn();
     }

@@ -17,11 +17,11 @@ class Penjualan
         $stmt = $this->db->prepare("
             INSERT INTO penjualan (
                 tanggal, nama_produk, durasi_atau_jumlah,
-                harga_beli, harga_jual, metode_customer, metode_modal,
+                harga_beli, harga_jual, untung, metode_customer, metode_modal,
                 no_customer, status, catatan
             ) VALUES (
                 CURDATE(), :produk, :durasi,
-                :beli, :jual, :metode_cust, :metode_modal,
+                :beli, :jual, :untung, :metode_cust, :metode_modal,
                 :no_cust, :status, :catatan
             )
         ");
@@ -31,6 +31,7 @@ class Penjualan
             ':durasi'        => $data['durasi_atau_jumlah'],
             ':beli'          => $data['harga_beli'],
             ':jual'          => $data['harga_jual'],
+            ':untung'        => $data['untung'], // ditambahkan
             ':metode_cust'   => $data['metode_customer'],
             ':metode_modal'  => $data['metode_modal'],
             ':no_cust'       => $data['no_customer'] ?? null,

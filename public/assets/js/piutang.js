@@ -1,4 +1,4 @@
-document.getElementById('piutangForm').addEventListener('submit', async (e) => {
+ document.getElementById('piutangForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const input = {

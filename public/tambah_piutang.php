@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/auth_check.php';
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -14,13 +17,13 @@
         <h1>Toko Penjualan</h1>
       </div>
       <nav class="nav-links">
-        <a href="index.html">Dashboard</a>
-        <a href="tambah_transaksi.html">Transaksi</a>
-        <a href="tambah_hutang.html">Hutang</a>
-        <a href="tambah_saldo.html">Saldo</a>
-        <a href="tambah_piutang.html" class="active">Piutang</a>
-        <a href="tambah_penjualan.html">Penjualan</a>
-        <a href="set_aset.html">Set Aset</a>
+        <a href="index.php">Dashboard</a>
+        <a href="tambah_transaksi.php">Transaksi</a>
+        <a href="tambah_hutang.php">Hutang</a>
+        <a href="tambah_saldo.php">Saldo</a>
+        <a href="tambah_piutang.php" class="active">Piutang</a>
+        <a href="tambah_penjualan.php">Penjualan</a>
+        <a href="set_aset.php">Set Aset</a>
       </nav>
     </div>
   </header>

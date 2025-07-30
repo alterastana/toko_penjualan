@@ -1,4 +1,4 @@
-console.log('✅ penjualan.js loaded');
+console.log('✅ penjualanv5.js loaded');
 
 document.addEventListener('DOMContentLoaded', () => {
   const namaInput = document.getElementById('nama_produk');
@@ -23,12 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch(`/toko_penjualan/public/get_produk.php?keyword=${encodeURIComponent(keyword)}`);
         const data = await response.json();
 
-        console.log('Data produk:', data);
-
         dropdown.innerHTML = '';
         dropdown.classList.remove('show');
 
-        if (data.length === 0) {
+        if (!data || data.length === 0) {
           dropdown.innerHTML = '<div>Tidak ditemukan</div>';
           dropdown.classList.add('show');
           return;
@@ -51,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         dropdown.classList.add('show');
-
       } catch (err) {
         console.error('Gagal mengambil produk:', err);
         dropdown.innerHTML = '<div>Terjadi kesalahan</div>';
@@ -60,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 300);
   });
 
+  // Tutup dropdown saat klik di luar
   document.addEventListener('click', (e) => {
     if (!dropdown.contains(e.target) && e.target !== namaInput) {
       dropdown.innerHTML = '';
@@ -71,11 +69,16 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('penjualanForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const input = {
+    const hargaBeli = parseFloat(document.getElementById('harga_beli').value) || 0;
+    const hargaJual = parseFloat(hargaJualInput.value) || 0;
+    const untung = hargaJual - hargaBeli; // Hitung untung
+
+    const variables = {
       nama_produk: namaInput.value,
       durasi_atau_jumlah: parseInt(document.getElementById('durasi').value),
-      harga_beli: parseFloat(document.getElementById('harga_beli').value),
-      harga_jual: parseFloat(hargaJualInput.value),
+      harga_beli: hargaBeli,
+      harga_jual: hargaJual,
+      untung: untung,
       metode_customer: document.getElementById('metode_customer').value,
       metode_modal: document.getElementById('metode_modal').value,
       no_customer: document.getElementById('no_customer').value || null,
@@ -89,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $durasi_atau_jumlah: Int!,
         $harga_beli: Float!,
         $harga_jual: Float!,
+        $untung: Float!,
         $metode_customer: String!,
         $metode_modal: String!,
         $no_customer: String,
@@ -100,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
           durasi_atau_jumlah: $durasi_atau_jumlah,
           harga_beli: $harga_beli,
           harga_jual: $harga_jual,
+          untung: $untung,
           metode_customer: $metode_customer,
           metode_modal: $metode_modal,
           no_customer: $no_customer,
@@ -116,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch("graphql/index.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query, variables: input })
+        body: JSON.stringify({ query, variables })
       });
 
       const result = await response.json();
@@ -134,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
         statusElem.textContent = data?.message || "Gagal menyimpan penjualan.";
         statusElem.style.color = "red";
       }
-
     } catch (error) {
       console.error("Gagal kirim data penjualan:", error);
       document.getElementById("penjualanStatus").textContent = "Terjadi kesalahan koneksi.";

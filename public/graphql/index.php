@@ -1,12 +1,14 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
+session_start(); // Tambahkan session start di awal
+
 
 // Autoload dan dependensi
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../../src/database/db.php';
 require_once __DIR__ . '/../../src/graphql/resolvers.php';
+
+// Debug: cek koneksi DB (opsional, bisa dihapus di produksi)
 file_put_contents('debug_db.txt', 'Aktif di DB: ' . $pdo->query("SELECT DATABASE()")->fetchColumn());
 
 use GraphQL\GraphQL;
@@ -31,21 +33,21 @@ try {
         'mutation' => \Src\GraphQL\Resolvers::mutationType()
     ]);
 
-    // Eksekusi query
+    // Eksekusi query GraphQL
     $result = GraphQL::executeQuery(
         $schema,
         $query,
         null,
-        ['db' => $pdo],  // Context yang diteruskan ke resolvers
+        ['db' => $pdo],  // Context DB ke resolvers
         $variables,
         $operation
     );
 
-    // Kirim hasil dengan debug info jika error
+    // Hasil JSON dengan debug info
     $output = $result->toArray(DebugFlag::INCLUDE_DEBUG_MESSAGE | DebugFlag::INCLUDE_TRACE);
 
 } catch (Throwable $e) {
-    // Tangani error besar (seperti gagal load schema, PDO, dll)
+    // Tangani error besar seperti koneksi atau schema gagal
     $output = [
         'errors' => [
             [
@@ -56,5 +58,5 @@ try {
     ];
 }
 
-// Kirim output JSON ke browser / frontend
+// Kirim output ke frontend
 echo json_encode($output);
